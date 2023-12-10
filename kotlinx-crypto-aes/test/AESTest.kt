@@ -4,7 +4,7 @@ import io.github.andreypfau.kotlinx.crypto.cipher.BlockCipher
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
 
-class AESTest {
+open class AESTest {
     data class CryptTest(
         val key: String,
         val input: String,

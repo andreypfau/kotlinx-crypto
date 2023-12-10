@@ -78,14 +78,12 @@ public class AESImpl(
         var t2 = 0u
         var t3 = 0u
         for (r in 0 until nr) {
-            t0 =
-                xk[k + 0] xor te0[(s0 shr 24).toUByte()] xor te1[(s1 shr 16).toUByte()] xor te2[(s2 shr 8).toUByte()] xor te3[s3.toUByte()]
-            t1 =
-                xk[k + 1] xor te0[(s1 shr 24).toUByte()] xor te1[(s2 shr 16).toUByte()] xor te2[(s3 shr 8).toUByte()] xor te3[s0.toUByte()]
-            t2 =
-                xk[k + 2] xor te0[(s2 shr 24).toUByte()] xor te1[(s3 shr 16).toUByte()] xor te2[(s0 shr 8).toUByte()] xor te3[s1.toUByte()]
-            t3 =
-                xk[k + 3] xor te0[(s3 shr 24).toUByte()] xor te1[(s0 shr 16).toUByte()] xor te2[(s1 shr 8).toUByte()] xor te3[s2.toUByte()]
+            // @formatter:off
+            t0 = xk[k + 0] xor te0[(s0 shr 24).toUByte()] xor te1[(s1 shr 16).toUByte()] xor te2[(s2 shr 8).toUByte()] xor te3[s3.toUByte()]
+            t1 = xk[k + 1] xor te0[(s1 shr 24).toUByte()] xor te1[(s2 shr 16).toUByte()] xor te2[(s3 shr 8).toUByte()] xor te3[s0.toUByte()]
+            t2 = xk[k + 2] xor te0[(s2 shr 24).toUByte()] xor te1[(s3 shr 16).toUByte()] xor te2[(s0 shr 8).toUByte()] xor te3[s1.toUByte()]
+            t3 = xk[k + 3] xor te0[(s3 shr 24).toUByte()] xor te1[(s0 shr 16).toUByte()] xor te2[(s1 shr 8).toUByte()] xor te3[s2.toUByte()]
+            // @formatter:on
             k += 4
             s0 = t0
             s1 = t1
@@ -94,14 +92,12 @@ public class AESImpl(
         }
 
         // Last round uses s-box directly and XORs to produce output.
-        s0 =
-            (SBOX0[t0 shr 24].toUInt() shl 24) or (SBOX0[t1 shr 16 and 0xFFu].toUInt() shl 16) or (SBOX0[t2 shr 8 and 0xFFu].toUInt() shl 8) or (SBOX0[t3 and 0xFFu].toUInt())
-        s1 =
-            (SBOX0[t1 shr 24].toUInt() shl 24) or (SBOX0[t2 shr 16 and 0xFFu].toUInt() shl 16) or (SBOX0[t3 shr 8 and 0xFFu].toUInt() shl 8) or (SBOX0[t0 and 0xFFu].toUInt())
-        s2 =
-            (SBOX0[t2 shr 24].toUInt() shl 24) or (SBOX0[t3 shr 16 and 0xFFu].toUInt() shl 16) or (SBOX0[t0 shr 8 and 0xFFu].toUInt() shl 8) or (SBOX0[t1 and 0xFFu].toUInt())
-        s3 =
-            (SBOX0[t3 shr 24].toUInt() shl 24) or (SBOX0[t0 shr 16 and 0xFFu].toUInt() shl 16) or (SBOX0[t1 shr 8 and 0xFFu].toUInt() shl 8) or (SBOX0[t2 and 0xFFu].toUInt())
+        // @formatter:off
+        s0 = (SBOX0[t0 shr 24].toUInt() shl 24) or (SBOX0[t1 shr 16 and 0xFFu].toUInt() shl 16) or (SBOX0[t2 shr 8 and 0xFFu].toUInt() shl 8) or (SBOX0[t3 and 0xFFu].toUInt())
+        s1 = (SBOX0[t1 shr 24].toUInt() shl 24) or (SBOX0[t2 shr 16 and 0xFFu].toUInt() shl 16) or (SBOX0[t3 shr 8 and 0xFFu].toUInt() shl 8) or (SBOX0[t0 and 0xFFu].toUInt())
+        s2 = (SBOX0[t2 shr 24].toUInt() shl 24) or (SBOX0[t3 shr 16 and 0xFFu].toUInt() shl 16) or (SBOX0[t0 shr 8 and 0xFFu].toUInt() shl 8) or (SBOX0[t1 and 0xFFu].toUInt())
+        s3 = (SBOX0[t3 shr 24].toUInt() shl 24) or (SBOX0[t0 shr 16 and 0xFFu].toUInt() shl 16) or (SBOX0[t1 shr 8 and 0xFFu].toUInt() shl 8) or (SBOX0[t2 and 0xFFu].toUInt())
+        // @formatter:on
 
         block[0] = s0 xor xk[k + 0]
         block[1] = s1 xor xk[k + 1]
@@ -129,14 +125,12 @@ public class AESImpl(
         var t2 = 0u
         var t3 = 0u
         for (r in 0 until nr) {
-            t0 =
-                xk[k + 0] xor td0[(s0 shr 24).toUByte()] xor td1[(s3 shr 16).toUByte()] xor td2[(s2 shr 8).toUByte()] xor td3[s1.toUByte()]
-            t1 =
-                xk[k + 1] xor td0[(s1 shr 24).toUByte()] xor td1[(s0 shr 16).toUByte()] xor td2[(s3 shr 8).toUByte()] xor td3[s2.toUByte()]
-            t2 =
-                xk[k + 2] xor td0[(s2 shr 24).toUByte()] xor td1[(s1 shr 16).toUByte()] xor td2[(s0 shr 8).toUByte()] xor td3[s3.toUByte()]
-            t3 =
-                xk[k + 3] xor td0[(s3 shr 24).toUByte()] xor td1[(s2 shr 16).toUByte()] xor td2[(s1 shr 8).toUByte()] xor td3[s0.toUByte()]
+            // @formatter:off
+            t0 = xk[k + 0] xor td0[(s0 shr 24).toUByte()] xor td1[(s3 shr 16).toUByte()] xor td2[(s2 shr 8).toUByte()] xor td3[s1.toUByte()]
+            t1 = xk[k + 1] xor td0[(s1 shr 24).toUByte()] xor td1[(s0 shr 16).toUByte()] xor td2[(s3 shr 8).toUByte()] xor td3[s2.toUByte()]
+            t2 = xk[k + 2] xor td0[(s2 shr 24).toUByte()] xor td1[(s1 shr 16).toUByte()] xor td2[(s0 shr 8).toUByte()] xor td3[s3.toUByte()]
+            t3 = xk[k + 3] xor td0[(s3 shr 24).toUByte()] xor td1[(s2 shr 16).toUByte()] xor td2[(s1 shr 8).toUByte()] xor td3[s0.toUByte()]
+            // @formatter:on
             k += 4
             s0 = t0
             s1 = t1
@@ -145,14 +139,12 @@ public class AESImpl(
         }
 
         // Last round uses s-box directly and XORs to produce output.
-        s0 =
-            (SBOX1[t0 shr 24].toUInt() shl 24) or (SBOX1[t3 shr 16 and 0xFFu].toUInt() shl 16) or (SBOX1[t2 shr 8 and 0xFFu].toUInt() shl 8) or (SBOX1[t1 and 0xFFu].toUInt())
-        s1 =
-            (SBOX1[t1 shr 24].toUInt() shl 24) or (SBOX1[t0 shr 16 and 0xFFu].toUInt() shl 16) or (SBOX1[t3 shr 8 and 0xFFu].toUInt() shl 8) or (SBOX1[t2 and 0xFFu].toUInt())
-        s2 =
-            (SBOX1[t2 shr 24].toUInt() shl 24) or (SBOX1[t1 shr 16 and 0xFFu].toUInt() shl 16) or (SBOX1[t0 shr 8 and 0xFFu].toUInt() shl 8) or (SBOX1[t3 and 0xFFu].toUInt())
-        s3 =
-            (SBOX1[t3 shr 24].toUInt() shl 24) or (SBOX1[t2 shr 16 and 0xFFu].toUInt() shl 16) or (SBOX1[t1 shr 8 and 0xFFu].toUInt() shl 8) or (SBOX1[t0 and 0xFFu].toUInt())
+        // @formatter:off
+        s0 = (SBOX1[t0 shr 24].toUInt() shl 24) or (SBOX1[t3 shr 16 and 0xFFu].toUInt() shl 16) or (SBOX1[t2 shr 8 and 0xFFu].toUInt() shl 8) or (SBOX1[t1 and 0xFFu].toUInt())
+        s1 = (SBOX1[t1 shr 24].toUInt() shl 24) or (SBOX1[t0 shr 16 and 0xFFu].toUInt() shl 16) or (SBOX1[t3 shr 8 and 0xFFu].toUInt() shl 8) or (SBOX1[t2 and 0xFFu].toUInt())
+        s2 = (SBOX1[t2 shr 24].toUInt() shl 24) or (SBOX1[t1 shr 16 and 0xFFu].toUInt() shl 16) or (SBOX1[t0 shr 8 and 0xFFu].toUInt() shl 8) or (SBOX1[t3 and 0xFFu].toUInt())
+        s3 = (SBOX1[t3 shr 24].toUInt() shl 24) or (SBOX1[t2 shr 16 and 0xFFu].toUInt() shl 16) or (SBOX1[t1 shr 8 and 0xFFu].toUInt() shl 8) or (SBOX1[t0 and 0xFFu].toUInt())
+        // @formatter:on
 
         block[0] = s0 xor xk[k + 0]
         block[1] = s1 xor xk[k + 1]

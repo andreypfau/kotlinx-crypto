@@ -21,6 +21,15 @@ public actual class SHA256 : Digest {
         nativeHeap.free(sha256Ctx.ptr)
     }
 
+    override fun write(source: ByteArray, startIndex: Int, endIndex: Int) {
+        if (source.isEmpty() && startIndex == 0 && endIndex == 0) {
+            return
+        }
+        source.usePinned { sourcePinned ->
+            CC_SHA256_Update(sha256Ctx.ptr, sourcePinned.addressOf(startIndex), (endIndex - startIndex).convert())
+        }
+    }
+
     override fun write(source: Buffer, byteCount: Long) {
         val tempBuffer = ByteArray(64)
         var remaining = byteCount
@@ -28,15 +37,6 @@ public actual class SHA256 : Digest {
             val read = source.readAtMostTo(tempBuffer, 0, min(remaining, tempBuffer.size.toLong()).toInt())
             write(tempBuffer, 0, read)
             remaining -= read
-        }
-    }
-
-    override fun write(source: ByteArray, startIndex: Int, endIndex: Int) {
-        if (source.isEmpty() && startIndex == 0 && endIndex == 0) {
-            return
-        }
-        source.usePinned { sourcePinned ->
-            CC_SHA256_Update(sha256Ctx.ptr, sourcePinned.addressOf(startIndex), (endIndex - startIndex).convert())
         }
     }
 

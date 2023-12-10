@@ -5,6 +5,10 @@ import kotlinx.io.RawSink
 public interface Digest : RawSink {
     public val digestSize: Int
 
+    public fun writeByte(byte: Byte) {
+        write(byteArrayOf(byte))
+    }
+
     public fun write(source: ByteArray, startIndex: Int = 0, endIndex: Int = source.size)
 
     public fun digest(): ByteArray = ByteArray(digestSize).apply {

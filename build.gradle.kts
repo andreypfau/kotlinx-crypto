@@ -12,7 +12,6 @@ allprojects {
         mavenCentral()
     }
 
-
     kotlin {
 
         explicitApi()
@@ -22,20 +21,24 @@ allprojects {
         iosX64()
         iosArm64()
         iosSimulatorArm64()
-        macosArm64()
-        macosX64()
 
-        linuxX64()
-        linuxArm64()
+        macosX64()
+        macosArm64()
+
+        tvosX64()
+        tvosArm64()
+        tvosSimulatorArm64()
+
+        watchosX64()
+        watchosArm32()
+        watchosArm64()
+        watchosSimulatorArm64()
+        watchosDeviceArm64()
 
         mingwX64()
 
-//        sourceSets {
-//            main {
-//                kotlin.srcDir("src")
-//                resources.srcDir("resources")
-//            }
-//        }
+        linuxX64()
+        linuxArm64()
 
         sourceSets {
             all {
@@ -43,37 +46,20 @@ allprojects {
                 languageSettings.optIn("kotlin.ExperimentalStdlibApi")
             }
 
-            val commonMain by getting {
-                kotlin.srcDir("src")
-            }
-            val jvmMain by getting {
-                kotlin.srcDir("src@jvm")
-            }
-            val appleMain by creating {
-                kotlin.srcDir("src@apple")
-                dependsOn(commonMain)
-                getByName("iosArm64Main").dependsOn(this)
-                getByName("iosX64Main").dependsOn(this)
-                getByName("iosSimulatorArm64Main").dependsOn(this)
-                getByName("macosArm64Main").dependsOn(this)
-                getByName("macosX64Main").dependsOn(this)
-            }
-
-            val linuxMain by creating {
-                kotlin.srcDir("src@linux")
-                dependsOn(commonMain)
-                getByName("linuxX64Main").dependsOn(this)
-                getByName("linuxArm64Main").dependsOn(this)
-            }
-
-            val mingwX64Main by getting {
-                kotlin.srcDir("src@mingw")
-            }
-
             val commonTest by getting {
-                kotlin.srcDir("test")
                 dependencies {
                     implementation(kotlin("test"))
+                }
+            }
+
+            if (project.name != "a") {
+                all {
+                    if (name.endsWith("Main")) {
+                        kotlin.srcDir("src${if (name.startsWith("common")) "" else "@${name.removeSuffix("Main")}"}")
+                    }
+                    if (name.endsWith("Test")) {
+                        kotlin.srcDir("test${if (name.startsWith("common")) "" else "@${name.removeSuffix("Test")}"}")
+                    }
                 }
             }
         }
