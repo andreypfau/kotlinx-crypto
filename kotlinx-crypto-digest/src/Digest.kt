@@ -1,15 +1,17 @@
 package io.github.andreypfau.kotlinx.crypto.digest
 
-import kotlinx.io.RawSink
-
-public interface Digest : RawSink {
+public interface Digest {
     public val digestSize: Int
 
-    public fun writeByte(byte: Byte) {
-        write(byteArrayOf(byte))
+    public val blockSize: Int
+
+    public val algorithmName: String
+
+    public fun updateByte(byte: Byte) {
+        update(byteArrayOf(byte))
     }
 
-    public fun write(source: ByteArray, startIndex: Int = 0, endIndex: Int = source.size)
+    public fun update(source: ByteArray, startIndex: Int = 0, endIndex: Int = source.size)
 
     public fun digest(): ByteArray = ByteArray(digestSize).apply {
         digest(this)
@@ -17,16 +19,7 @@ public interface Digest : RawSink {
 
     public fun digest(destination: ByteArray, destinationOffset: Int = 0)
 
-    public fun digest(sink: RawSink)
-
-    override fun flush() {
-    }
-
-    override fun close() {
-        reset()
-    }
-
     public fun reset()
 }
 
-public inline operator fun Digest.plusAssign(byteArray: ByteArray): Unit = write(byteArray)
+public inline operator fun Digest.plusAssign(byteArray: ByteArray): Unit = update(byteArray)

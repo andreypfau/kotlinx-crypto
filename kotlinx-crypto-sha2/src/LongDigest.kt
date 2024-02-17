@@ -1,8 +1,6 @@
 package io.github.andreypfau.kotlinx.crypto.sha2
 
 import io.github.andreypfau.kotlinx.crypto.digest.Digest
-import kotlinx.io.Buffer
-import kotlin.math.min
 
 /**
  * Base class for SHA-384 and SHA-512.
@@ -33,17 +31,7 @@ public abstract class LongDigest : Digest {
         byteCount1++
     }
 
-    override fun write(source: Buffer, byteCount: Long) {
-        var remaining = byteCount
-        val buffer = ByteArray(8)
-        while (remaining > 0) {
-            val read = source.readAtMostTo(buffer, 0, min(remaining, buffer.size.toLong()).toInt())
-            write(buffer, 0, read)
-            remaining -= read
-        }
-    }
-
-    override fun write(source: ByteArray, startIndex: Int, endIndex: Int) {
+    override fun update(source: ByteArray, startIndex: Int, endIndex: Int) {
         var inOff = startIndex
         var len = endIndex - startIndex
 

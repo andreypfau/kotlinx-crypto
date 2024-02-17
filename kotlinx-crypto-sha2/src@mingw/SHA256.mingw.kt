@@ -16,12 +16,12 @@ public actual typealias SHA256 = SHA256Impl
 //        BCryptOpenAlgorithmProvider(ctx.ptr, "SHA256", null, 0.convert())
 //    }
 //
-//    override fun write(source: Buffer, byteCount: Long) {
+//   override fun update(source: Buffer, byteCount: Long) {
 //        TODO("Not yet implemented")
 //    }
 //
 //
-//    override fun write(source: ByteArray, startIndex: Int, endIndex: Int) {
+//   override fun update(source: ByteArray, startIndex: Int, endIndex: Int) {
 //        TODO("Not yet implemented")
 //    }
 //

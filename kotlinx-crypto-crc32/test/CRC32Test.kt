@@ -6,7 +6,7 @@ import kotlin.test.assertEquals
 class CRC32Test {
 
     @Test
-    fun `test CRC32`() {
+    fun testCRC32() {
         // @formatter:off
         testCrc32(0x0, 0x0, "")
         testCrc32(0xe8b7be43, 0xc1d04330, "a")

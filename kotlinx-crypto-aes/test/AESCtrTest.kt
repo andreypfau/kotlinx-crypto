@@ -1,6 +1,8 @@
 package io.github.andreypfau.kotlinx.crypto.aes
 
 import io.github.andreypfau.kotlinx.crypto.cipher.CTRBlockCipher
+import kotlinx.io.Buffer
+import kotlinx.io.readByteArray
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
 
@@ -10,7 +12,7 @@ class AESCtrTest {
     ).asByteArray()
 
     @Test
-    fun `test CTR-AES128`() = testAesCtr(
+    fun testCTRAES128() = testAesCtr(
         commonKey128,
         commonCounter,
         commonInput,
@@ -18,7 +20,7 @@ class AESCtrTest {
     )
 
     @Test
-    fun `test CTR-AES192`() = testAesCtr(
+    fun testCTRAES192() = testAesCtr(
         commonKey192,
         commonCounter,
         commonInput,
@@ -26,7 +28,7 @@ class AESCtrTest {
     )
 
     @Test
-    fun `test CTR-AES256`() = testAesCtr(
+    fun testCTRAES256() = testAesCtr(
         commonKey256,
         commonCounter,
         commonInput,
@@ -47,6 +49,17 @@ class AESCtrTest {
             ctr.processBytes(plain, encrypted)
             val expected = output.copyOfRange(0, output.size - j)
             assertContentEquals(expected, encrypted)
+        }
+
+        for (j in 0..5 step 5) {
+            val plain = Buffer().apply {
+                write(input.copyOfRange(0, input.size - j))
+            }
+            val ctr = CTRBlockCipher(cipher, iv)
+            val encrypted = Buffer()
+            ctr.processBytes(plain, encrypted, plain.size)
+            val expected = output.copyOfRange(0, output.size - j)
+            assertContentEquals(expected, encrypted.readByteArray())
         }
 
         for (j in 0..7 step 7) {

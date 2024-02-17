@@ -1,8 +1,11 @@
 package io.github.andreypfau.kotlinx.crypto.benchmarks
 
-import io.github.andreypfau.kotlinx.crypto.crc32.CRC32Pure
+import io.github.andreypfau.kotlinx.crypto.crc32.CRC32Impl
 import io.github.andreypfau.kotlinx.crypto.digest.plusAssign
-import kotlinx.benchmark.*
+import kotlinx.benchmark.Benchmark
+import kotlinx.benchmark.Scope
+import kotlinx.benchmark.Setup
+import kotlinx.benchmark.State
 import kotlin.random.Random
 
 @State(Scope.Benchmark)
@@ -16,7 +19,7 @@ open class CRC32Benchmark {
 
     @Benchmark
     fun benchmarkPure(): Int {
-        val crc32 = CRC32Pure()
+        val crc32 = CRC32Impl()
         crc32 += byteArray
         return crc32.intDigest()
     }

@@ -6,7 +6,7 @@ import kotlin.test.assertContentEquals
 
 class SHA256Test {
     @Test
-    fun `test SHA256`() {
+    fun testSHA256() {
         assertSha256("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "")
         assertSha256("ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb", "a")
         assertSha256("fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603", "ab")

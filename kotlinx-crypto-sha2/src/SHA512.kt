@@ -2,9 +2,6 @@ package io.github.andreypfau.kotlinx.crypto.sha2
 
 import io.github.andreypfau.kotlinx.crypto.digest.Digest
 import io.github.andreypfau.kotlinx.crypto.digest.plusAssign
-import kotlinx.io.Buffer
-import kotlinx.io.RawSink
-import kotlinx.io.readTo
 
 public expect class SHA512 public constructor(): Digest
 
@@ -31,34 +28,20 @@ public class SHA512Impl : LongDigest(), Digest {
 
     override val digestSize: Int get() = SIZE_BYTES
 
-    override fun digest(sink: RawSink) {
-        if (sink is Buffer) {
-            digest(sink)
-        } else {
-            val buffer = Buffer()
-            digest(buffer)
-            sink.write(buffer, digestSize.toLong())
-        }
-    }
+    override val blockSize: Int get() = BLOCK_SIZE_BYTES
+
+    override val algorithmName: String get() = ALGORITHM_NAME
 
     override fun digest(destination: ByteArray, destinationOffset: Int) {
-        val buffer = Buffer()
-        digest(buffer)
-        buffer.readTo(destination, destinationOffset, destinationOffset + digestSize)
-    }
-
-    private fun digest(buffer: Buffer) {
         finish()
-        buffer.apply {
-            writeLong(h1)
-            writeLong(h2)
-            writeLong(h3)
-            writeLong(h4)
-            writeLong(h5)
-            writeLong(h6)
-            writeLong(h7)
-            writeLong(h8)
-        }
+        destination.setLongAt(destinationOffset, h1)
+        destination.setLongAt(destinationOffset + 8, h2)
+        destination.setLongAt(destinationOffset + 16, h3)
+        destination.setLongAt(destinationOffset + 24, h4)
+        destination.setLongAt(destinationOffset + 32, h5)
+        destination.setLongAt(destinationOffset + 40, h6)
+        destination.setLongAt(destinationOffset + 48, h7)
+        destination.setLongAt(destinationOffset + 56, h8)
         reset()
     }
 
@@ -84,5 +67,18 @@ public class SHA512Impl : LongDigest(), Digest {
         public const val ALGORITHM_NAME: String = "SHA-512"
         public const val SIZE_BYTES: Int = 64
         public const val SIZE_BITS: Int = SIZE_BYTES * Byte.SIZE_BITS
+        public const val BLOCK_SIZE_BYTES: Int = 128
+        public const val BLOCK_SIZE_BITS: Int = BLOCK_SIZE_BYTES * Byte.SIZE_BITS
+
+        private fun ByteArray.setLongAt(index: Int, value: Long) {
+            this[index] = (value ushr 56).toByte()
+            this[index + 1] = (value ushr 48).toByte()
+            this[index + 2] = (value ushr 40).toByte()
+            this[index + 3] = (value ushr 32).toByte()
+            this[index + 4] = (value ushr 24).toByte()
+            this[index + 5] = (value ushr 16).toByte()
+            this[index + 6] = (value ushr 8).toByte()
+            this[index + 7] = value.toByte()
+        }
     }
 }

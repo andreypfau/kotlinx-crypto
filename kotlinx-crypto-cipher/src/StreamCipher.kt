@@ -1,5 +1,8 @@
 package io.github.andreypfau.kotlinx.crypto.cipher
 
+import kotlinx.io.RawSink
+import kotlinx.io.RawSource
+
 public interface StreamCipher {
     public val algorithmName: String
 
@@ -12,6 +15,12 @@ public interface StreamCipher {
         startIndex: Int = 0,
         endIndex: Int = source.size
     ): Int
+
+    public fun processBytes(
+        source: RawSource,
+        destination: RawSink,
+        byteCount: Long
+    ): Long
 
     public fun reset()
 }

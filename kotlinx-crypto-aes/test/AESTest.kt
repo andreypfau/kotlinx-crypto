@@ -40,7 +40,7 @@ open class AESTest {
 
     @Test
     @OptIn(ExperimentalStdlibApi::class)
-    fun `test AES encrypt`() {
+    fun testEncryptAES() {
         encryptTests.forEach {
             val key = it.key.hexToByteArray()
             val input = it.input.hexToByteArray()
@@ -52,7 +52,7 @@ open class AESTest {
 
     @Test
     @OptIn(ExperimentalStdlibApi::class)
-    fun `test AES decrypt`() {
+    fun testDecryptAES() {
         encryptTests.forEach {
             val key = it.key.hexToByteArray()
             val input = it.input.hexToByteArray()

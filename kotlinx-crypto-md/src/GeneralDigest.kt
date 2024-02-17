@@ -1,8 +1,6 @@
 package io.github.andreypfau.kotlinx.crypto.md
 
 import io.github.andreypfau.kotlinx.crypto.digest.Digest
-import kotlinx.io.Buffer
-import kotlin.math.min
 
 /**
  * base implementation of MD4 family style digest as outlined in "Handbook of Applied Cryptography",
@@ -22,17 +20,7 @@ public abstract class GeneralDigest : Digest {
         byteCount++
     }
 
-    override fun write(source: Buffer, byteCount: Long) {
-        var remaining = byteCount
-        val buffer = ByteArray(4)
-        while (remaining > 0) {
-            val read = source.readAtMostTo(buffer, 0, min(remaining, buffer.size.toLong()).toInt())
-            write(buffer, 0, read)
-            remaining -= read
-        }
-    }
-
-    override fun write(source: ByteArray, startIndex: Int, endIndex: Int) {
+    override fun update(source: ByteArray, startIndex: Int, endIndex: Int) {
         val length = endIndex - startIndex
         // fill the current word
         var i = 0

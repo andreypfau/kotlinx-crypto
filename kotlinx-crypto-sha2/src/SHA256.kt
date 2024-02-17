@@ -3,9 +3,6 @@ package io.github.andreypfau.kotlinx.crypto.sha2
 import io.github.andreypfau.kotlinx.crypto.digest.Digest
 import io.github.andreypfau.kotlinx.crypto.digest.plusAssign
 import io.github.andreypfau.kotlinx.crypto.md.GeneralDigest
-import kotlinx.io.Buffer
-import kotlinx.io.RawSink
-import kotlinx.io.readTo
 
 public expect class SHA256 public constructor() : Digest
 
@@ -43,34 +40,20 @@ public class SHA256Impl : GeneralDigest(), Digest {
 
     override val digestSize: Int get() = SIZE_BYTES
 
-    override fun digest(sink: RawSink) {
-        if (sink is Buffer) {
-            digest(sink)
-        } else {
-            val buffer = Buffer()
-            digest(buffer)
-            sink.write(buffer, digestSize.toLong())
-        }
-    }
+    override val blockSize: Int get() = BLOCK_SIZE_BYTES
+
+    override val algorithmName: String get() = ALGORITHM_NAME
 
     override fun digest(destination: ByteArray, destinationOffset: Int) {
-        val buffer = Buffer()
-        digest(buffer)
-        buffer.readTo(destination, destinationOffset, destinationOffset + digestSize)
-    }
-
-    private fun digest(buffer: Buffer) {
         finish()
-        buffer.apply {
-            writeInt(h1)
-            writeInt(h2)
-            writeInt(h3)
-            writeInt(h4)
-            writeInt(h5)
-            writeInt(h6)
-            writeInt(h7)
-            writeInt(h8)
-        }
+        destination.setIntAt(destinationOffset, h1)
+        destination.setIntAt(destinationOffset + 4, h2)
+        destination.setIntAt(destinationOffset + 8, h3)
+        destination.setIntAt(destinationOffset + 12, h4)
+        destination.setIntAt(destinationOffset + 16, h5)
+        destination.setIntAt(destinationOffset + 20, h6)
+        destination.setIntAt(destinationOffset + 24, h7)
+        destination.setIntAt(destinationOffset + 28, h8)
         reset()
     }
 
@@ -199,6 +182,15 @@ public class SHA256Impl : GeneralDigest(), Digest {
         public const val ALGORITHM_NAME: String = "SHA-256"
         public const val SIZE_BYTES: Int = 32
         public const val SIZE_BITS: Int = SIZE_BYTES * Byte.SIZE_BITS
+        public const val BLOCK_SIZE_BYTES: Int = 64
+        public const val BLOCK_SIZE_BITS: Int = BLOCK_SIZE_BYTES * Byte.SIZE_BITS
+
+        private fun ByteArray.setIntAt(offset: Int, value: Int) {
+            this[offset] = (value ushr 24).toByte()
+            this[offset + 1] = (value ushr 16).toByte()
+            this[offset + 2] = (value ushr 8).toByte()
+            this[offset + 3] = value.toByte()
+        }
     }
 }
 

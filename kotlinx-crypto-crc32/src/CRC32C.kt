@@ -11,4 +11,4 @@ public fun crc32c(bytes: ByteArray): Int {
     return crc32c.intDigest()
 }
 
-public class CRC32CPure : CRC32Pure(CASTAGNOLI_TABLE), IntDigest
+public class CRC32CImpl : CRC32Impl(CASTAGNOLI_TABLE), IntDigest

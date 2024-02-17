@@ -2,16 +2,18 @@ package io.github.andreypfau.kotlinx.crypto.sha2
 
 import io.github.andreypfau.kotlinx.crypto.digest.Digest
 import kotlinx.cinterop.*
-import kotlinx.io.Buffer
-import kotlinx.io.RawSink
 import platform.CoreCrypto.*
 import kotlin.experimental.ExperimentalNativeApi
-import kotlin.math.min
 import kotlin.native.ref.createCleaner
 
 @OptIn(ExperimentalForeignApi::class)
 public actual class SHA512 : Digest {
     override val digestSize: Int get() = CC_SHA512_DIGEST_LENGTH
+
+    override val blockSize: Int get() = CC_SHA512_BLOCK_BYTES
+
+    override val algorithmName: String get() = SHA512Impl.ALGORITHM_NAME
+
     private var ctx = nativeHeap.alloc<CC_SHA512_CTX>().apply {
         CC_SHA512_Init(ptr)
     }
@@ -21,17 +23,7 @@ public actual class SHA512 : Digest {
         nativeHeap.free(ctx.ptr)
     }
 
-    override fun write(source: Buffer, byteCount: Long) {
-        val tempBuffer = ByteArray(128)
-        var remaining = byteCount
-        while (remaining > 0) {
-            val read = source.readAtMostTo(tempBuffer, 0, min(remaining, tempBuffer.size.toLong()).toInt())
-            write(tempBuffer, 0, read)
-            remaining -= read
-        }
-    }
-
-    override fun write(source: ByteArray, startIndex: Int, endIndex: Int) {
+    override fun update(source: ByteArray, startIndex: Int, endIndex: Int) {
         if (source.isEmpty() && startIndex == 0 && endIndex == 0) {
             return
         }
@@ -44,17 +36,12 @@ public actual class SHA512 : Digest {
         destination.asUByteArray().usePinned { destinationPinned ->
             CC_SHA512_Final(destinationPinned.addressOf(destinationOffset), ctx.ptr)
         }
-    }
-
-    override fun digest(sink: RawSink) {
-        val buffer = Buffer()
-        buffer.write(digest())
-        sink.write(buffer, digestSize.toLong())
+        reset()
     }
 
     override fun reset() {
         nativeHeap.free(ctx.ptr)
-        nativeHeap.alloc<CC_SHA512_CTX>().apply {
+        ctx = nativeHeap.alloc<CC_SHA512_CTX>().apply {
             CC_SHA512_Init(ptr)
         }
     }

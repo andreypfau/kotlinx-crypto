@@ -1,10 +1,11 @@
 plugins {
-    kotlin("multiplatform") version "1.9.20"
+    kotlin("multiplatform") version "1.9.22"
+    id("publish") apply false
 }
 
 allprojects {
     group = "io.github.andreypfau"
-    version = "1.0-SNAPSHOT"
+    version = "0.0.2"
 
     apply(plugin = "kotlin-multiplatform")
 
@@ -16,7 +17,13 @@ allprojects {
 
         explicitApi()
 
-        jvm()
+        jvm {
+            compilations.all {
+                kotlinOptions {
+                    jvmTarget = "1.8"
+                }
+            }
+        }
 
         iosX64()
         iosArm64()
@@ -40,6 +47,18 @@ allprojects {
         linuxX64()
         linuxArm64()
 
+        js(IR) {
+            nodejs()
+            browser()
+        }
+
+        @OptIn(org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl::class)
+        wasmJs {
+            nodejs()
+            browser()
+            binaries.executable()
+        }
+
         sourceSets {
             all {
                 languageSettings.optIn("kotlin.ExperimentalUnsignedTypes")
@@ -52,14 +71,12 @@ allprojects {
                 }
             }
 
-            if (project.name != "a") {
-                all {
-                    if (name.endsWith("Main")) {
-                        kotlin.srcDir("src${if (name.startsWith("common")) "" else "@${name.removeSuffix("Main")}"}")
-                    }
-                    if (name.endsWith("Test")) {
-                        kotlin.srcDir("test${if (name.startsWith("common")) "" else "@${name.removeSuffix("Test")}"}")
-                    }
+            all {
+                if (name.endsWith("Main")) {
+                    kotlin.srcDir("src${if (name.startsWith("common")) "" else "@${name.removeSuffix("Main")}"}")
+                }
+                if (name.endsWith("Test")) {
+                    kotlin.srcDir("test${if (name.startsWith("common")) "" else "@${name.removeSuffix("Test")}"}")
                 }
             }
         }
