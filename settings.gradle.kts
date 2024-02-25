@@ -25,6 +25,8 @@ include(":kotlinx-crypto-crc32")
 include(":kotlinx-crypto-blake2")
 include(":kotlinx-crypto-hmac")
 include(":kotlinx-crypto-pbkdf2")
+include(":kotlinx-crypto-salsa20")
+include(":kotlinx-crypto-chacha")
 include(":kotlinx-crypto-benchmarks")
 project(":kotlinx-crypto-benchmarks").projectDir = file("./benchmarks")
 
