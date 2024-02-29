@@ -1,4 +1,4 @@
-package io.github.andreypfau.kotlinx.crypto.digest
+package io.github.andreypfau.kotlinx.crypto
 
 public interface IntDigest : Digest {
     override val digestSize: Int

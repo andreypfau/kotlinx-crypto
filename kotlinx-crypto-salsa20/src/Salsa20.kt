@@ -1,7 +1,5 @@
-package io.github.andreypfau.kotlinx.crypto.salsa20
+package io.github.andreypfau.kotlinx.crypto
 
-import io.github.andreypfau.kotlinx.crypto.cipher.SkippingCipher
-import io.github.andreypfau.kotlinx.crypto.cipher.StreamCipher
 import kotlinx.io.Buffer
 import kotlinx.io.RawSink
 import kotlinx.io.RawSource
@@ -15,12 +13,13 @@ public open class Salsa20(
     public constructor(key: ByteArray, iv: ByteArray) : this(DEFAULT_ROUNDS, key, iv)
 
     protected val state: IntArray = IntArray(STATE_SIZE)
-    protected val x = IntArray(STATE_SIZE)
+    protected val x: IntArray = IntArray(STATE_SIZE)
     private val keyStream = ByteArray(STATE_SIZE * Int.SIZE_BYTES)
     private var index = 0
 
     init {
         setKey(key, iv)
+        seekTo(0)
     }
 
     override val algorithmName: String = "Salsa20${if (rounds != DEFAULT_ROUNDS) "/$rounds" else ""}"
@@ -164,9 +163,10 @@ public open class Salsa20(
         }
         private val TAU_SIGMA = TAU + SIGMA
 
-        private fun processBlock(rounds: Int, input: IntArray, x: IntArray) {
+        public fun processBlock(rounds: Int, input: IntArray, x: IntArray) {
             input.copyInto(x, 0, 0, 16)
             for (i in rounds downTo 1 step 2) {
+                // column rounds
                 x[4] = x[4] xor (x[0] + x[12]).rotateLeft(7)
                 x[8] = x[8] xor (x[4] + x[0]).rotateLeft(9)
                 x[12] = x[12] xor (x[8] + x[4]).rotateLeft(13)
@@ -184,6 +184,7 @@ public open class Salsa20(
                 x[11] = x[11] xor (x[7] + x[3]).rotateLeft(13)
                 x[15] = x[15] xor (x[11] + x[7]).rotateLeft(18)
 
+                // diagonal rounds
                 x[1] = x[1] xor (x[0] + x[3]).rotateLeft(7)
                 x[2] = x[2] xor (x[1] + x[0]).rotateLeft(9)
                 x[3] = x[3] xor (x[2] + x[1]).rotateLeft(13)

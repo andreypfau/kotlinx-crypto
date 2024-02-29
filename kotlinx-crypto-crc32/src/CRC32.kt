@@ -1,7 +1,5 @@
-package io.github.andreypfau.kotlinx.crypto.crc32
+package io.github.andreypfau.kotlinx.crypto
 
-import io.github.andreypfau.kotlinx.crypto.digest.IntDigest
-import io.github.andreypfau.kotlinx.crypto.digest.plusAssign
 import kotlin.experimental.xor
 
 public expect class CRC32 public constructor() : IntDigest
@@ -21,7 +19,12 @@ public open class CRC32Impl internal constructor(
 
     private var crc32: UInt = 0xffffffffU
 
-    override fun update(source: ByteArray, startIndex: Int, endIndex: Int) {
+    override fun update(byte: Byte): CRC32Impl = apply {
+        val index = byte.xor(crc32.toByte()).toUByte()
+        crc32 = table[index.toInt()].xor(crc32.shr(8))
+    }
+
+    override fun update(source: ByteArray, startIndex: Int, endIndex: Int): CRC32Impl = apply {
         for (i in startIndex until endIndex) {
             val index = source[i].xor(crc32.toByte()).toUByte()
             crc32 = table[index.toInt()].xor(crc32.shr(8))

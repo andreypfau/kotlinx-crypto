@@ -1,6 +1,5 @@
-package io.github.andreypfau.kotlinx.crypto.sha2
+package io.github.andreypfau.kotlinx.crypto
 
-import io.github.andreypfau.kotlinx.crypto.digest.plusAssign
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
 
@@ -137,7 +136,7 @@ class SHA512Test {
     fun assertSha512(expected: String, input: String) {
         assertContentEquals(expected.hexToByteArray(), sha512(input.encodeToByteArray()))
 
-        val digest = SHA512Impl()
+        val digest = Sha512Impl()
         digest += input.encodeToByteArray()
         assertContentEquals(expected.hexToByteArray(), digest.digest())
     }

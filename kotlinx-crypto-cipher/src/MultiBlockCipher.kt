@@ -1,4 +1,4 @@
-package io.github.andreypfau.kotlinx.crypto.cipher
+package io.github.andreypfau.kotlinx.crypto
 
 /**
  * Base interface for a cipher engine capable of processing multiple blocks at a time.

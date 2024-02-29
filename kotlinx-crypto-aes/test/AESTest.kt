@@ -1,6 +1,5 @@
-package io.github.andreypfau.kotlinx.crypto.aes
+package io.github.andreypfau.kotlinx.crypto
 
-import io.github.andreypfau.kotlinx.crypto.cipher.BlockCipher
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
 

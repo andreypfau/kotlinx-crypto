@@ -1,6 +1,4 @@
-package io.github.andreypfau.kotlinx.crypto.md
-
-import io.github.andreypfau.kotlinx.crypto.digest.Digest
+package io.github.andreypfau.kotlinx.crypto
 
 /**
  * base implementation of MD4 family style digest as outlined in "Handbook of Applied Cryptography",
@@ -11,8 +9,8 @@ public abstract class GeneralDigest : Digest {
     private var xBuffOff = 0
     private var byteCount = 0
 
-    public fun update(input: Byte) {
-        xBuf[xBuffOff++] = input
+    public override fun update(byte: Byte): GeneralDigest = apply {
+        xBuf[xBuffOff++] = byte
         if (xBuffOff == xBuf.size) {
             processWord(xBuf, 0)
             xBuffOff = 0
@@ -20,7 +18,7 @@ public abstract class GeneralDigest : Digest {
         byteCount++
     }
 
-    override fun update(source: ByteArray, startIndex: Int, endIndex: Int) {
+    override fun update(source: ByteArray, startIndex: Int, endIndex: Int): GeneralDigest = apply {
         val length = endIndex - startIndex
         // fill the current word
         var i = 0

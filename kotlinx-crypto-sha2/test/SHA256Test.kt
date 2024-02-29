@@ -1,6 +1,5 @@
-package io.github.andreypfau.kotlinx.crypto.sha2
+package io.github.andreypfau.kotlinx.crypto
 
-import io.github.andreypfau.kotlinx.crypto.digest.plusAssign
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
 
@@ -44,7 +43,7 @@ class SHA256Test {
     fun assertSha256(expected: String, input: String) {
         assertContentEquals(expected.hexToByteArray(), sha256(input.encodeToByteArray()))
 
-        val shA256Impl = SHA256Impl()
+        val shA256Impl = Sha256Impl()
         shA256Impl += input.encodeToByteArray()
         assertContentEquals(expected.hexToByteArray(), shA256Impl.digest())
     }

@@ -1,4 +1,4 @@
-package io.github.andreypfau.kotlinx.crypto.cipher
+package io.github.andreypfau.kotlinx.crypto
 
 public abstract class DefaultMultiBlockCipher : MultiBlockCipher {
     override val multiBlockSize: Int

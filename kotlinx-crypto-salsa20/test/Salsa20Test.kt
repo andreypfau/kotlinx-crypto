@@ -1,4 +1,4 @@
-package io.github.andreypfau.kotlinx.crypto.salsa20
+package io.github.andreypfau.kotlinx.crypto
 
 import kotlin.test.Test
 import kotlin.test.assertContentEquals

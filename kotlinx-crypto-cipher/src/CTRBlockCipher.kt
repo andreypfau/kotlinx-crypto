@@ -1,4 +1,4 @@
-package io.github.andreypfau.kotlinx.crypto.cipher
+package io.github.andreypfau.kotlinx.crypto
 
 import kotlin.experimental.xor
 

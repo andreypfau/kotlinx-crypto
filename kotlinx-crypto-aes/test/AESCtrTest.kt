@@ -1,6 +1,5 @@
-package io.github.andreypfau.kotlinx.crypto.aes
+package io.github.andreypfau.kotlinx.crypto
 
-import io.github.andreypfau.kotlinx.crypto.cipher.CTRBlockCipher
 import kotlinx.io.Buffer
 import kotlinx.io.readByteArray
 import kotlin.test.Test

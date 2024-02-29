@@ -1,4 +1,4 @@
-package io.github.andreypfau.kotlinx.crypto.crc32
+package io.github.andreypfau.kotlinx.crypto
 
 // IEEE is by far and away the most common CRC-32 polynomial.
 // Used by ethernet (IEEE 802.3), v.42, fddi, gzip, zip, png, ...

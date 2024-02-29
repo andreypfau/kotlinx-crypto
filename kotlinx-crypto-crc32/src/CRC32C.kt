@@ -1,7 +1,4 @@
-package io.github.andreypfau.kotlinx.crypto.crc32
-
-import io.github.andreypfau.kotlinx.crypto.digest.IntDigest
-import io.github.andreypfau.kotlinx.crypto.digest.plusAssign
+package io.github.andreypfau.kotlinx.crypto
 
 public expect class CRC32C public constructor() : IntDigest
 

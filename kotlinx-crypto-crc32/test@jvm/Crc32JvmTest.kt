@@ -1,6 +1,5 @@
-package io.github.andreypfau.kotlinx.crypto.crc32
+package io.github.andreypfau.kotlinx.crypto
 
-import io.github.andreypfau.kotlinx.crypto.digest.plusAssign
 import org.junit.Test
 
 class Crc32JvmTest {

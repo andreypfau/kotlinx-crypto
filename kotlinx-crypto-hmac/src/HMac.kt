@@ -1,12 +1,10 @@
-package io.github.andreypfau.kotlinx.crypto.hmac
-
-import io.github.andreypfau.kotlinx.crypto.digest.Digest
+package io.github.andreypfau.kotlinx.crypto
 
 public class HMac(
     private val digest: Digest,
     key: ByteArray
-) : Digest {
-    override val digestSize: Int
+) : Mac {
+    override val macSize: Int
         get() = digest.digestSize
     override val blockSize: Int
         get() = digest.blockSize
@@ -14,7 +12,7 @@ public class HMac(
         get() = "${digest.algorithmName}/HMAC"
 
     private val inputPad = ByteArray(blockSize)
-    private val outputBuf = ByteArray(blockSize + digestSize)
+    private val outputBuf = ByteArray(blockSize + macSize)
 
     init {
         digest.reset()
@@ -22,7 +20,7 @@ public class HMac(
         if (keyLength > blockSize) {
             digest.update(key)
             digest.digest(inputPad)
-            keyLength = digestSize
+            keyLength = macSize
         } else {
             key.copyInto(inputPad)
         }
@@ -39,7 +37,12 @@ public class HMac(
         digest.update(inputPad)
     }
 
-    override fun digest(destination: ByteArray, destinationOffset: Int) {
+    override fun reset() {
+        digest.reset()
+        digest.update(inputPad)
+    }
+
+    override fun doFinal(destination: ByteArray, destinationOffset: Int) {
         val blockSize = blockSize
         digest.digest(outputBuf, blockSize)
         digest.update(outputBuf)
@@ -48,20 +51,11 @@ public class HMac(
         digest.update(inputPad)
     }
 
-    override fun reset() {
-        digest.reset()
-        digest.update(inputPad)
+    override fun update(byte: Byte): HMac = apply {
+        digest.update(byte)
     }
 
-    override fun digest(): ByteArray {
-        return digest.digest()
-    }
-
-    override fun updateByte(byte: Byte) {
-        digest.updateByte(byte)
-    }
-
-    override fun update(source: ByteArray, startIndex: Int, endIndex: Int) {
+    override fun update(source: ByteArray, startIndex: Int, endIndex: Int): HMac = apply {
         digest.update(source, startIndex, endIndex)
     }
 

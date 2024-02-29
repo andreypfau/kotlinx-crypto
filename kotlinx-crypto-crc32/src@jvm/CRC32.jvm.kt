@@ -1,15 +1,17 @@
-package io.github.andreypfau.kotlinx.crypto.crc32
+package io.github.andreypfau.kotlinx.crypto
 
-import io.github.andreypfau.kotlinx.crypto.digest.IntDigest
-import java.util.zip.CRC32
 
 public actual class CRC32 : IntDigest {
-    private val crc32jvm = CRC32()
+    private val crc32jvm = java.util.zip.CRC32()
 
     override val algorithmName: String get() = "CRC-32"
 
-    override fun update(source: ByteArray, startIndex: Int, endIndex: Int) {
+    override fun update(source: ByteArray, startIndex: Int, endIndex: Int): CRC32 = apply {
         crc32jvm.update(source, startIndex, endIndex - startIndex)
+    }
+
+    override fun update(byte: Byte): CRC32 = apply {
+        crc32jvm.update(byte.toInt())
     }
 
     override fun digest(destination: ByteArray, destinationOffset: Int) {

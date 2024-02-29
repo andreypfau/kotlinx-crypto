@@ -1,6 +1,5 @@
-package io.github.andreypfau.kotlinx.crypto.blake2
+package io.github.andreypfau.kotlinx.crypto
 
-import io.github.andreypfau.kotlinx.crypto.digest.plusAssign
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

@@ -1,7 +1,5 @@
-package io.github.andreypfau.kotlinx.crypto.pbkdf2
+package io.github.andreypfau.kotlinx.crypto
 
-import io.github.andreypfau.kotlinx.crypto.digest.Digest
-import io.github.andreypfau.kotlinx.crypto.hmac.HMac
 import kotlin.experimental.xor
 
 public fun pbkdf2(

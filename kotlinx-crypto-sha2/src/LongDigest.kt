@@ -1,6 +1,4 @@
-package io.github.andreypfau.kotlinx.crypto.sha2
-
-import io.github.andreypfau.kotlinx.crypto.digest.Digest
+package io.github.andreypfau.kotlinx.crypto
 
 /**
  * Base class for SHA-384 and SHA-512.
@@ -22,8 +20,8 @@ public abstract class LongDigest : Digest {
     protected var h7: Long = 0L
     protected var h8: Long = 0L
 
-    public fun update(input: Byte) {
-        xBuf[xBufOff++] = input
+    public override fun update(byte: Byte): LongDigest = apply {
+        xBuf[xBufOff++] = byte
         if (xBufOff == xBuf.size) {
             processWord(xBuf, 0)
             xBufOff = 0
@@ -31,7 +29,7 @@ public abstract class LongDigest : Digest {
         byteCount1++
     }
 
-    override fun update(source: ByteArray, startIndex: Int, endIndex: Int) {
+    override fun update(source: ByteArray, startIndex: Int, endIndex: Int): LongDigest = apply {
         var inOff = startIndex
         var len = endIndex - startIndex
 

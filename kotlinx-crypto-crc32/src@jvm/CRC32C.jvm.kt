@@ -1,11 +1,17 @@
-package io.github.andreypfau.kotlinx.crypto.crc32
-
-import io.github.andreypfau.kotlinx.crypto.digest.IntDigest
+package io.github.andreypfau.kotlinx.crypto
 
 public actual class CRC32C private constructor(
     private val delegated: IntDigest
 ): IntDigest by delegated {
     public actual constructor() : this(crc32Delegate())
+
+    override fun update(byte: Byte): CRC32C = apply {
+        delegated.update(byte)
+    }
+
+    override fun update(source: ByteArray, startIndex: Int, endIndex: Int): CRC32C = apply {
+        delegated.update(source, startIndex, endIndex)
+    }
 }
 
 private val crc32Delegate by lazy(LazyThreadSafetyMode.PUBLICATION) {
@@ -28,7 +34,11 @@ internal class CRC32CJvm : IntDigest {
 
     override val algorithmName: String get() = "CRC-32C"
 
-    override fun update(source: ByteArray, startIndex: Int, endIndex: Int) {
+    override fun update(byte: Byte): CRC32CJvm = apply {
+        jvmCrc32c.update(byte.toInt())
+    }
+
+    override fun update(source: ByteArray, startIndex: Int, endIndex: Int): CRC32CJvm = apply {
         jvmCrc32c.update(source, startIndex, endIndex - startIndex)
     }
 

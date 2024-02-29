@@ -1,4 +1,4 @@
-package io.github.andreypfau.kotlinx.crypto.digest
+package io.github.andreypfau.kotlinx.crypto
 
 import java.security.MessageDigest
 
@@ -9,7 +9,11 @@ public abstract class JvmDigest(
     override val digestSize: Int
         get() = digest.digestLength
 
-    override fun update(source: ByteArray, startIndex: Int, endIndex: Int) {
+    override fun update(byte: Byte): JvmDigest = apply {
+        digest.update(byte)
+    }
+
+    override fun update(source: ByteArray, startIndex: Int, endIndex: Int): JvmDigest = apply {
         digest.update(source, startIndex, endIndex)
     }
 

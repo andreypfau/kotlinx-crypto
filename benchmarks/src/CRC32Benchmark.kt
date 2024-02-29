@@ -1,7 +1,7 @@
 package io.github.andreypfau.kotlinx.crypto.benchmarks
 
-import io.github.andreypfau.kotlinx.crypto.crc32.CRC32Impl
-import io.github.andreypfau.kotlinx.crypto.digest.plusAssign
+import io.github.andreypfau.kotlinx.crypto.CRC32Impl
+import io.github.andreypfau.kotlinx.crypto.plusAssign
 import kotlinx.benchmark.Benchmark
 import kotlinx.benchmark.Scope
 import kotlinx.benchmark.Setup

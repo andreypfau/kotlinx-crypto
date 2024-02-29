@@ -1,7 +1,5 @@
-package io.github.andreypfau.kotlinx.crypto.aes
+package io.github.andreypfau.kotlinx.crypto
 
-import io.github.andreypfau.kotlinx.crypto.cipher.DefaultMultiBlockCipher
-import io.github.andreypfau.kotlinx.crypto.cipher.MultiBlockCipher
 import javax.crypto.Cipher
 import javax.crypto.spec.SecretKeySpec
 

@@ -1,6 +1,5 @@
-package io.github.andreypfau.kotlinx.crypto.keccak
+package io.github.andreypfau.kotlinx.crypto
 
-import io.github.andreypfau.kotlinx.crypto.digest.Digest
 import kotlin.experimental.or
 import kotlin.math.min
 
@@ -22,7 +21,11 @@ public open class Keccak(
     override val algorithmName: String
         get() = "Keccak-$fixedOutputLength"
 
-    override fun update(source: ByteArray, startIndex: Int, endIndex: Int) {
+    override fun update(byte: Byte): Keccak = apply {
+        absorbBits(byte.toInt(), 8)
+    }
+
+    override fun update(source: ByteArray, startIndex: Int, endIndex: Int): Keccak = apply {
         val bytesInQueue = bitsInQueue ushr 3
         val rateBytes = rate ushr 3
         val available = rateBytes - bytesInQueue
@@ -30,7 +33,7 @@ public open class Keccak(
         if (len < available) {
             source.copyInto(dataQueue, bytesInQueue, startIndex, endIndex)
             bitsInQueue += len shl 3
-            return
+            return@apply
         }
         var count = 0
         if (bytesInQueue > 0) {

@@ -1,7 +1,4 @@
-package io.github.andreypfau.kotlinx.crypto.aes
-
-import io.github.andreypfau.kotlinx.crypto.cipher.DefaultMultiBlockCipher
-import io.github.andreypfau.kotlinx.crypto.cipher.MultiBlockCipher
+package io.github.andreypfau.kotlinx.crypto
 
 public expect class AES public constructor(key: ByteArray) : MultiBlockCipher
 

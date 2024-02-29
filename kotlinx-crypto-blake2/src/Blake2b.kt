@@ -1,6 +1,4 @@
-package io.github.andreypfau.kotlinx.crypto.blake2
-
-import io.github.andreypfau.kotlinx.crypto.digest.Digest
+package io.github.andreypfau.kotlinx.crypto
 
 public open class Blake2b(
     digestSize: Int,
@@ -51,7 +49,7 @@ public open class Blake2b(
         chainValue[2] = BLAKE2B_IV[2] xor (nodeDepth.toLong() or (innerHashLength.toLong() shl 8))
     }
 
-    override fun updateByte(byte: Byte) {
+    override fun update(byte: Byte): Blake2b = apply {
         var remainingLength = BLOCK_SIZE_BYTES - bufferPos
         if (remainingLength == 0) {
             t0 += BLOCK_SIZE_BYTES
@@ -67,10 +65,10 @@ public open class Blake2b(
         }
     }
 
-    override fun update(source: ByteArray, startIndex: Int, endIndex: Int) {
+    override fun update(source: ByteArray, startIndex: Int, endIndex: Int): Blake2b = apply {
         val length = endIndex - startIndex
         if (length == 0) {
-            return
+            return@apply
         }
         var remainingLength = 0
         if (bufferPos != 0) { // commenced, incomplete buffer
@@ -87,7 +85,7 @@ public open class Blake2b(
             } else {
                 source.copyInto(buffer, bufferPos, startIndex, endIndex)
                 bufferPos += length
-                return
+                return@apply
             }
         }
 

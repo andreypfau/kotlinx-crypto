@@ -1,6 +1,4 @@
-package io.github.andreypfau.kotlinx.crypto.keccak
-
-import io.github.andreypfau.kotlinx.crypto.digest.Digest
+package io.github.andreypfau.kotlinx.crypto
 
 public expect class SHA3(
     bitLength: Int

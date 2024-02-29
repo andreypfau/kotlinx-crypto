@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalUnsignedTypes::class)
 
-package io.github.andreypfau.kotlinx.crypto.aes
+package io.github.andreypfau.kotlinx.crypto
 
 // Powers of x mod poly in GF(2).
 internal val POWX = byteArrayOf(

@@ -1,7 +1,5 @@
-package io.github.andreypfau.kotlinx.crypto.keccak
+package io.github.andreypfau.kotlinx.crypto
 
-import io.github.andreypfau.kotlinx.crypto.digest.Digest
-import io.github.andreypfau.kotlinx.crypto.digest.JvmDigest
 import java.security.MessageDigest
 
 public actual class SHA3 public actual constructor(

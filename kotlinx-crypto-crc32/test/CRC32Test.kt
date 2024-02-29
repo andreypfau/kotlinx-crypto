@@ -1,4 +1,4 @@
-package io.github.andreypfau.kotlinx.crypto.crc32
+package io.github.andreypfau.kotlinx.crypto
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
