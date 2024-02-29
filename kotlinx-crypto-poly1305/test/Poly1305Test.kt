@@ -19,7 +19,7 @@ class Poly1305Test {
 
         val expected = "f3ffc7703f9400e52a7dfb4b3d3305d9".hexToByteArray()
 
-        val result = Poly1305(key).update(msg).doFinal()
+        val result = Poly1305(key).update(msg).digest()
         assertContentEquals(expected, result)
     }
 
@@ -40,7 +40,7 @@ class Poly1305Test {
 
         val poly = Poly1305(key)
         poly.update(msg)
-        assertContentEquals(expected, poly.doFinal())
+        assertContentEquals(expected, poly.digest())
     }
 
     @Test
@@ -56,7 +56,7 @@ class Poly1305Test {
             poly.update(it)
         }
 
-        assertContentEquals(expected, poly.doFinal())
+        assertContentEquals(expected, poly.digest())
     }
 
     // From <https://tools.ietf.org/html/rfc7539#section-2.5.2>
@@ -66,7 +66,7 @@ class Poly1305Test {
         val msg = "43727970746f6772617068696320466f72756d2052657365617263682047726f7570".hexToByteArray()
         val expected = "a8061dc1305136c6c22b8baf0c0127a9".hexToByteArray()
 
-        val result = Poly1305(key).update(msg).doFinal()
+        val result = Poly1305(key).update(msg).digest()
         assertContentEquals(expected, result)
     }
 }

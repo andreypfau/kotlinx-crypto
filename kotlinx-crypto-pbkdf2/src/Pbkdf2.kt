@@ -22,9 +22,9 @@ public class Pbkdf2(
         iterationCount: Int
     ) : this(HMac(digest, password), salt, iterationCount)
 
-    private val state = ByteArray(hMac.digestSize)
+    private val state = ByteArray(hMac.macSize)
 
-    public fun deriveKey(keySize: Int = hMac.digestSize): ByteArray {
+    public fun deriveKey(keySize: Int = hMac.macSize): ByteArray {
         val key = ByteArray(keySize)
         deriveKey(key, 0, keySize)
         return key
@@ -33,7 +33,7 @@ public class Pbkdf2(
     public fun deriveKey(destination: ByteArray, destinationOffset: Int = 0, keySize: Int = hMac.digestSize) {
         hMac.reset()
 
-        val digestSize = hMac.digestSize
+        val digestSize = hMac.macSize
         val numBlocks = (keySize + digestSize - 1) / digestSize
 
         val dk = ByteArray(numBlocks * digestSize)

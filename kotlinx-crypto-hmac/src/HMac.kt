@@ -42,7 +42,7 @@ public class HMac(
         digest.update(inputPad)
     }
 
-    override fun doFinal(destination: ByteArray, destinationOffset: Int) {
+    override fun digest(destination: ByteArray, destinationOffset: Int) {
         val blockSize = blockSize
         digest.digest(outputBuf, blockSize)
         digest.update(outputBuf)

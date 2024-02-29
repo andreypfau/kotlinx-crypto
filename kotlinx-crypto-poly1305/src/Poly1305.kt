@@ -12,7 +12,7 @@ public inline fun poly1305(
 ) {
     val poly = Poly1305(key)
     poly.update(message, startIndex, endIndex)
-    poly.doFinal(destination, destinationOffset)
+    poly.digest(destination, destinationOffset)
 }
 
 public inline fun poly1305(
@@ -21,7 +21,7 @@ public inline fun poly1305(
 ): ByteArray {
     val poly = Poly1305(key)
     poly.update(message)
-    return poly.doFinal()
+    return poly.digest()
 }
 
 public class Poly1305(
@@ -162,7 +162,7 @@ public class Poly1305(
         h[4] = h4
     }
 
-    override fun doFinal(destination: ByteArray, destinationOffset: Int) {
+    override fun digest(destination: ByteArray, destinationOffset: Int) {
         if (blockOffset > 0) {
             block[blockOffset] = 1
             if (blockOffset + 1 < block.size) {

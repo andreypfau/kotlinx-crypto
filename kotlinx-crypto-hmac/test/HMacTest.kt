@@ -100,7 +100,7 @@ class HMacTest {
         HMac(digest(), key).apply {
             update(input)
             val result = ByteArray(macSize)
-            doFinal(result)
+            digest(result)
             assertEquals(output.toHexString(), result.toHexString())
         }
     }
