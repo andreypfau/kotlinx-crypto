@@ -9,8 +9,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(libs.kotlinx.benchmark.runtime)
-                implementation(project(":kotlinx-crypto-crc32"))
+//                implementation(project(":kotlinx-crypto-crc32"))
             }
         }
     }

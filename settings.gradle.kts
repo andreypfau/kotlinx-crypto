@@ -14,34 +14,21 @@ plugins {
 
 rootProject.name = "kotlinx-crypto"
 
-include(":kotlinx-crypto-cipher")
-include(":kotlinx-crypto-digest")
-include(":kotlinx-crypto-sha1")
-include(":kotlinx-crypto-sha2")
-include(":kotlinx-crypto-keccak")
-include(":kotlinx-crypto-md")
-include(":kotlinx-crypto-aes")
-include(":kotlinx-crypto-crc32")
-include(":kotlinx-crypto-blake2")
-include(":kotlinx-crypto-hmac")
-include(":kotlinx-crypto-pbkdf2")
-include(":kotlinx-crypto-salsa20")
-include(":kotlinx-crypto-poly1305")
-include(":kotlinx-crypto-subtle")
-//include(":kotlinx-crypto-chacha")
-include(":kotlinx-crypto-benchmarks")
-project(":kotlinx-crypto-benchmarks").projectDir = file("./benchmarks")
-
-dependencyResolutionManagement {
-    versionCatalogs {
-        create("libs") {
-            version("java", "8")
-            version("jmh", "1.36")
-            version("benchmark", "0.4.10")
-            version("kotlin", "1.9.20")
-
-            library("kotlin-gradle-plugin", "org.jetbrains.kotlin", "kotlin-gradle-plugin").versionRef("kotlin")
-            library("kotlinx-benchmark-runtime", "org.jetbrains.kotlinx", "kotlinx-benchmark-runtime").versionRef("benchmark")
-        }
-    }
+fun module(name: String) {
+    include(":kotlinx-crypto-$name")
+    project(":kotlinx-crypto-$name").projectDir = file("./$name")
 }
+
+module("digest")
+module("cipher")
+module("subtle")
+module("sha1")
+module("sha2")
+module("keccak")
+module("aes")
+module("crc32")
+module("blake2")
+module("hmac")
+module("pbkdf2")
+module("salsa20")
+module("poly1305")

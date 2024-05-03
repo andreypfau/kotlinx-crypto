@@ -1,11 +1,13 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
-    kotlin("multiplatform") version "1.9.22"
+    kotlin("multiplatform") version "2.0.0-RC2"
     id("publish") apply false
 }
 
 allprojects {
     group = "io.github.andreypfau"
-    version = "0.0.3"
+    version = "0.0.4"
 
     apply(plugin = "kotlin-multiplatform")
 
@@ -13,39 +15,39 @@ allprojects {
         mavenCentral()
     }
 
-    kotlin {
+    tasks.withType<KotlinCompile>().configureEach {
+        compilerOptions {
+            freeCompilerArgs.add("-Xexpect-actual-classes")
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_1_8)
+        }
+    }
 
+    kotlin {
         explicitApi()
 
-        jvm {
-            compilations.all {
-                kotlinOptions {
-                    jvmTarget = "1.8"
-                }
-            }
-        }
+        jvm()
 
-        iosX64()
         iosArm64()
         iosSimulatorArm64()
+        iosX64()
 
-        macosX64()
         macosArm64()
+        macosX64()
 
-        tvosX64()
         tvosArm64()
         tvosSimulatorArm64()
+        tvosX64()
 
-        watchosX64()
         watchosArm32()
         watchosArm64()
-        watchosSimulatorArm64()
         watchosDeviceArm64()
+        watchosSimulatorArm64()
+        watchosX64()
 
         mingwX64()
 
-        linuxX64()
         linuxArm64()
+        linuxX64()
 
         js(IR) {
             nodejs()
