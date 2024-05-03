@@ -9,6 +9,10 @@
 ### Gradle Kotlin DSL:
 
 ```kotlin
+repositories {
+    mavenCentral()
+}
+
 val kotlinxCryptoVersion = "0.0.4"
 
 dependencies {
