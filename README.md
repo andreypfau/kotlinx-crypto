@@ -9,7 +9,18 @@
 ### Gradle Kotlin DSL:
 
 ```kotlin
+val kotlinxCryptoVersion = "0.0.4"
+
 dependencies {
-    implementation("io.github.andreypfau:kotlinx-crypto:0.0.4")
+    implementation("io.github.andreypfau:kotlinx-crypto-aes:$kotlinxCryptoVersion") 
+    implementation("io.github.andreypfau:kotlinx-crypto-blake2:$kotlinxCryptoVersion") 
+    implementation("io.github.andreypfau:kotlinx-crypto-crc32:$kotlinxCryptoVersion") 
+    implementation("io.github.andreypfau:kotlinx-crypto-hmac:$kotlinxCryptoVersion") 
+    implementation("io.github.andreypfau:kotlinx-crypto-keccak:$kotlinxCryptoVersion") 
+    implementation("io.github.andreypfau:kotlinx-crypto-pbkdf2:$kotlinxCryptoVersion") 
+    implementation("io.github.andreypfau:kotlinx-crypto-poly1305:$kotlinxCryptoVersion") 
+    implementation("io.github.andreypfau:kotlinx-crypto-salsa20:$kotlinxCryptoVersion") 
+    implementation("io.github.andreypfau:kotlinx-crypto-sha1:$kotlinxCryptoVersion") 
+    implementation("io.github.andreypfau:kotlinx-crypto-sha2:$kotlinxCryptoVersion") 
 }
 ```
