@@ -30,12 +30,12 @@ public class XSalsa20(
         state[7] = iv.getIntLeAt(20)
     }
 
-    private companion object {
-        private inline fun ByteArray.getIntLeAt(index: Int): Int {
-            return (this[index].toInt() and 0xff) or
-                    ((this[index + 1].toInt() and 0xff) shl 8) or
-                    ((this[index + 2].toInt() and 0xff) shl 16) or
-                    ((this[index + 3].toInt() and 0xff) shl 24)
-        }
+    private fun ByteArray.getIntLeAt(index: Int): Int {
+        return (this[index].toInt() and 0xff) or
+                ((this[index + 1].toInt() and 0xff) shl 8) or
+                ((this[index + 2].toInt() and 0xff) shl 16) or
+                ((this[index + 3].toInt() and 0xff) shl 24)
     }
+
+    public companion object
 }
