@@ -15,11 +15,21 @@ public actual class AES actual constructor(key: ByteArray) : DefaultMultiBlockCi
         init(Cipher.DECRYPT_MODE, SecretKeySpec(key, "AES"))
     }
 
-    actual override fun encryptBlock(source: ByteArray, destination: ByteArray, destinationOffset: Int, startIndex: Int): Int {
+    actual override fun encryptBlock(
+        source: ByteArray,
+        destination: ByteArray,
+        destinationOffset: Int,
+        startIndex: Int
+    ): Int {
         return encryptCipher.doFinal(source, startIndex, blockSize, destination, destinationOffset)
     }
 
-    actual override fun decryptBlock(source: ByteArray, destination: ByteArray, destinationOffset: Int, startIndex: Int): Int {
+    actual override fun decryptBlock(
+        source: ByteArray,
+        destination: ByteArray,
+        destinationOffset: Int,
+        startIndex: Int
+    ): Int {
         return decryptCipher.doFinal(source, startIndex, blockSize, destination, destinationOffset)
     }
 

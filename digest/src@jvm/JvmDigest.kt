@@ -14,7 +14,7 @@ public abstract class JvmDigest(
     }
 
     override fun update(source: ByteArray, startIndex: Int, endIndex: Int): JvmDigest = apply {
-        digest.update(source, startIndex, endIndex)
+        digest.update(source, startIndex, endIndex - startIndex)
     }
 
     override fun digest(destination: ByteArray, destinationOffset: Int) {

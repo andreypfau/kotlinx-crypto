@@ -198,7 +198,7 @@ private inline fun Sum0(x: Long): Long =
 private inline fun Sum1(x: Long): Long =
     ((x shl 50) or (x ushr 14)) xor ((x shl 46) or (x ushr 18)) xor ((x shl 23) or (x ushr 41))
 
-private  inline fun Long.sigma0(): Long =
+private inline fun Long.sigma0(): Long =
     ((this shl 63) or (this ushr 1)) xor ((this shl 56) or (this ushr 8)) xor (this ushr 7)
 
 private inline fun Long.sigma1(): Long =

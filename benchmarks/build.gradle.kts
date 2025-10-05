@@ -1,3 +1,4 @@
+import jdk.tools.jlink.resources.plugins
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 
 plugins {

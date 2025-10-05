@@ -7,7 +7,7 @@ package io.github.andreypfau.kotlinx.crypto
 public abstract class GeneralDigest : Digest {
     private val xBuf = ByteArray(4)
     private var xBuffOff = 0
-    private var byteCount = 0
+    private var byteCount = 0L
 
     public override fun update(byte: Byte): GeneralDigest = apply {
         xBuf[xBuffOff++] = byte
@@ -49,7 +49,7 @@ public abstract class GeneralDigest : Digest {
     }
 
     public fun finish() {
-        val bitLength = byteCount.toLong() shl 3
+        val bitLength = byteCount shl 3
 
         // add the pad bytes.
         update(128.toByte())

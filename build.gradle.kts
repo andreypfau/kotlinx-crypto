@@ -1,13 +1,16 @@
+@file:OptIn(ExperimentalWasmDsl::class)
+
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("multiplatform") version "2.0.0-RC2"
+    kotlin("multiplatform") version "2.2.20"
     id("publish") apply false
 }
 
 allprojects {
     group = "io.github.andreypfau"
-    version = "0.0.4"
+    version = "0.0.5"
 
     apply(plugin = "kotlin-multiplatform")
 
@@ -54,7 +57,6 @@ allprojects {
             browser()
         }
 
-        @OptIn(org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl::class)
         wasmJs {
             nodejs()
             browser()

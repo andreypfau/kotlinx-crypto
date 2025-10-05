@@ -7,7 +7,7 @@ import kotlin.native.ref.createCleaner
 
 public actual class Sha1 private constructor(
     private val delegate: ССSha1
-): Digest by delegate {
+) : Digest by delegate {
     public actual constructor() : this(ССSha1())
 
     @OptIn(ExperimentalNativeApi::class)
@@ -34,7 +34,7 @@ public class ССSha1 : Digest, AutoCloseable {
 
     private var ctx = init()
 
-     override fun update(byte: Byte): ССSha1 = apply {
+    override fun update(byte: Byte): ССSha1 = apply {
         memScoped {
             val bytePtr = alloc<ByteVar>()
             bytePtr.value = byte
@@ -42,7 +42,7 @@ public class ССSha1 : Digest, AutoCloseable {
         }
     }
 
-     override fun update(source: ByteArray, startIndex: Int, endIndex: Int): ССSha1 = apply {
+    override fun update(source: ByteArray, startIndex: Int, endIndex: Int): ССSha1 = apply {
         if (source.isEmpty() && startIndex == 0 && endIndex == 0) {
             return@apply
         }

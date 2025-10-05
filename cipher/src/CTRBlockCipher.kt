@@ -11,6 +11,7 @@ public class CTRBlockCipher(
             "IV length must equal block size"
         }
     }
+
     private val iv = iv.copyOf()
     private val counter = ByteArray(cipher.blockSize)
     private val counterOut = ByteArray(cipher.blockSize)

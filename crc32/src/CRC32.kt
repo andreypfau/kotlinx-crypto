@@ -21,29 +21,29 @@ public expect class CRC32 public constructor() : IntDigest {
 }
 
 public fun crc32(bytes: ByteArray): Int {
-    val crc32 = CRC32Impl()
+    val crc32 = CRC32()
     crc32 += bytes
     return crc32.intDigest()
 }
 
 public open class CRC32Impl internal constructor(
-    private val table: UIntArray
-): IntDigest {
-    public constructor() : this(IEEE_TABLE)
+    private val table: IntArray
+) : IntDigest {
+    public constructor() : this(IEEE_TABLE_ARRAY)
 
     override val algorithmName: String get() = ALGORITHM_NAME
 
-    private var crc32: UInt = 0xffffffffU
+    private var crc32: Int = 0xffffffff.toInt()
 
     override fun update(byte: Byte): CRC32Impl = apply {
         val index = byte.xor(crc32.toByte()).toUByte()
-        crc32 = table[index.toInt()].xor(crc32.shr(8))
+        crc32 = table[index.toInt()].xor(crc32.ushr(8))
     }
 
     override fun update(source: ByteArray, startIndex: Int, endIndex: Int): CRC32Impl = apply {
         for (i in startIndex until endIndex) {
             val index = source[i].xor(crc32.toByte()).toUByte()
-            crc32 = table[index.toInt()].xor(crc32.shr(8))
+            crc32 = table[index.toInt()].xor(crc32.ushr(8))
         }
     }
 
@@ -62,10 +62,10 @@ public open class CRC32Impl internal constructor(
     }
 
     override fun reset() {
-        crc32 = 0xffffffffU
+        crc32 = 0xffffffff.toInt()
     }
 
-    override fun intDigest(): Int = crc32.xor(0xffffffffU).toInt()
+    override fun intDigest(): Int = crc32.xor(0xffffffff.toInt()).toInt()
 
     public companion object {
         public const val ALGORITHM_NAME: String = "CRC-32"

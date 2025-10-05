@@ -2,10 +2,10 @@ package io.github.andreypfau.kotlinx.crypto
 
 public actual class CRC32C private constructor(
     private val delegated: IntDigest
-): IntDigest by delegated {
+) : IntDigest by delegated {
     public actual constructor() : this(crc32Delegate())
 
-    override actual fun update(byte: Byte): CRC32C = apply {
+    actual override fun update(byte: Byte): CRC32C = apply {
         delegated.update(byte)
     }
 
